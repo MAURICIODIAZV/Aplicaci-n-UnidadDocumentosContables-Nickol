@@ -1,0 +1,6 @@
+{
+  "name": "Gamified Document Validator",
+  "description": "Interactive prototype with gamification for validating, completing, and managing accounting documentation in real-time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-indigo-brand: #3525cd;
+  --color-indigo-brand-hover: #261aa8;
+  --color-emerald-brand: #006c49;
+  --color-emerald-brand-light: #6ffbbe;
+  --color-sunset-brand: #684000;
+  --color-sunset-brand-light: #ffddb8;
+  
+  --shadow-ambient: 0 4px 16px rgba(77, 68, 227, 0.12);
+  --shadow-lift: 0 8px 24px rgba(77, 68, 227, 0.20);
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float-up 1s ease-out forwards;
+}
+
