@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useGame } from '../../context/GameContext';
 import { CircularProgressBar } from '../CircularProgressBar';
 import { FileCode, FileText, CheckCircle2, Clock, Play, Sparkles } from 'lucide-react';
+import { getDailyCategoriesForDate, getFileNameForCategory, getAmountForCategory } from '../../mockData';
+import { Document } from '../../types';
 
 export const ProgressView: React.FC = () => {
-  const { documents, completeDocument, stats, level, setView, setSelectedDate, setPendingDocToUpload } = useGame();
+  const { documents, stats, setView, setSelectedDate, setPendingDocToUpload } = useGame();
 
-  // Take the 3 most representative documents for the "Recent Quests" list
-  // which matches the mockup: Factura_001.pdf, Gasto_Viaje.xlsx, and Contrato_Q2.pdf
-  const recentDocs = documents.slice(0, 3);
+  // Generate today's missions and check if they are already completed in the DB
+  const recentDocs = useMemo(() => {
+    const dailyCats = getDailyCategoriesForDate(new Date());
+    
+    return dailyCats.map((cat, idx) => {
+      // Check if user already uploaded this specific category for "Hoy"
+      const existingDoc = documents.find(d => d.type === cat && d.date === "Hoy");
+      
+      if (existingDoc) {
+        return existingDoc;
+      }
+
+      // Otherwise, return a pending mission template
+      const isExcel = cat.endsWith('bancario') || cat.includes('cuenta') || cat.endsWith('transferencia');
+      const pendingDoc: Document = {
+        id: `mission-${idx + 1}-${Date.now()}`, // unique id so it can be replaced when uploaded
+        type: cat,
+        name: getFileNameForCategory(cat),
+        date: "Hoy",
+        amount: getAmountForCategory(cat),
+        status: "pending",
+        hasExcelLink: isExcel,
+        fieldsValidated: true,
+        uploadedSameDay: true
+      };
+      return pendingDoc;
+    });
+  }, [documents]);
 
   // Helper format currency
   const formatAmount = (val: number) => {

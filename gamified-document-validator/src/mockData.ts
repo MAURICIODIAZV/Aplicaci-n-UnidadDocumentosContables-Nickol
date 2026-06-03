@@ -16,15 +16,31 @@ export const initialStats: Stats = {
   totalDocsProcessed: 0
 };
 
-export const dateOptions: DateOption[] = [
-  { key: "May 29", label: "May 29", relative: "3 días antes" },
-  { key: "May 30", label: "May 30", relative: "2 días antes" },
-  { key: "May 31", label: "May 31", relative: "1 día antes" },
-  { key: "Hoy", label: "Hoy", relative: "Hoy (01 Jun)" },
-  { key: "Jun 02", label: "Jun 02", relative: "1 día después" },
-  { key: "Jun 03", label: "Jun 03", relative: "2 días después" },
-  { key: "Jun 04", label: "Jun 04", relative: "3 días después" }
-];
+const generateDateOptions = (): DateOption[] => {
+  const options: DateOption[] = [];
+  const today = new Date();
+  
+  for (let i = -3; i <= 3; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    
+    const month = d.toLocaleDateString('es-ES', { month: 'short' }).substring(0, 3);
+    const day = d.getDate().toString().padStart(2, '0');
+    const monthCap = month.charAt(0).toUpperCase() + month.slice(1);
+    const key = `${monthCap} ${day}`;
+    
+    if (i === 0) {
+      options.push({ key: "Hoy", label: "Hoy", relative: `Hoy (${day} ${monthCap})` });
+    } else if (i < 0) {
+      options.push({ key, label: key, relative: `${Math.abs(i)} días antes` });
+    } else {
+      options.push({ key, label: key, relative: `${i} días después` });
+    }
+  }
+  return options;
+};
+
+export const dateOptions: DateOption[] = generateDateOptions();
 
 export const getDailyCategoriesForDate = (dateObj: Date): string[] => {
   const categories = [
@@ -128,12 +144,13 @@ export const generateInitialDocuments = (): Document[] => {
   });
 
   // Past & future background documents
+  const options = dateOptions;
   const restOfDocs: Document[] = [
     {
       id: "doc-past-1",
       type: "Factura",
       name: "Factura_001.pdf",
-      date: "May 31",
+      date: options[2].key,
       amount: 299.34,
       status: "pending",
       hasExcelLink: false,
@@ -144,7 +161,7 @@ export const generateInitialDocuments = (): Document[] => {
       id: "doc-past-2",
       type: "Estado de cuenta bancario",
       name: "Extracto_Bancario_Q1.xlsx",
-      date: "May 30",
+      date: options[1].key,
       amount: 4500.00,
       status: "pending",
       hasExcelLink: true,
@@ -155,7 +172,7 @@ export const generateInitialDocuments = (): Document[] => {
       id: "doc-past-3",
       type: "Nota de crédito",
       name: "Nota_de_Credito_Proveedor.pdf",
-      date: "May 29",
+      date: options[0].key,
       amount: 120.00,
       status: "pending",
       hasExcelLink: false,
@@ -166,7 +183,7 @@ export const generateInitialDocuments = (): Document[] => {
       id: "doc-future-1",
       type: "Comprobante de transferencia",
       name: "Transferencia_Servidores.pdf",
-      date: "Jun 02",
+      date: options[4].key,
       amount: 890.00,
       status: "pending",
       hasExcelLink: false,
@@ -177,7 +194,7 @@ export const generateInitialDocuments = (): Document[] => {
       id: "doc-future-2",
       type: "Orden de compra",
       name: "Orden_Compra_Insumos.pdf",
-      date: "Jun 03",
+      date: options[5].key,
       amount: 150.00,
       status: "pending",
       hasExcelLink: false,
@@ -188,7 +205,7 @@ export const generateInitialDocuments = (): Document[] => {
       id: "doc-future-3",
       type: "Remito / Albarán",
       name: "Remito_Entregas.pdf",
-      date: "Jun 04",
+      date: options[6].key,
       amount: 0.00,
       status: "pending",
       hasExcelLink: false,

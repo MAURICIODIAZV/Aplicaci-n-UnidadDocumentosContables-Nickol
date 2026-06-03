@@ -8,6 +8,7 @@ import { UploadView } from './components/views/UploadView';
 import { ExcelView } from './components/views/ExcelView';
 import { ProfileView } from './components/views/ProfileView';
 import { HistoryView } from './components/views/HistoryView';
+import { Auth } from './components/Auth';
 import { Sparkles, AlertCircle, X, HelpCircle, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -21,8 +22,23 @@ function AppContent() {
     level,
     activeLevelUpReward,
     setActiveLevelUpReward,
-    userProfile
+    userProfile,
+    session,
+    loadingAuth
   } = useGame();
+
+  if (loadingAuth) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-100 font-sans">
+        <Sparkles className="w-10 h-10 text-indigo-500 animate-pulse mb-4" />
+        <p className="font-bold text-slate-500 animate-pulse">Cargando aplicación...</p>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <Auth />;
+  }
 
   // Watch toast changes to automatically sweep after 3.5 seconds
   useEffect(() => {

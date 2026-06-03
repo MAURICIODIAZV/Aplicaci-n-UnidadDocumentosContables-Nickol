@@ -3,7 +3,7 @@ import { useGame } from '../../context/GameContext';
 import { Upload, FileUp, Database, HelpCircle, Check, Loader2, DollarSign, FileSpreadsheet, Percent } from 'lucide-react';
 
 export const UploadView: React.FC = () => {
-  const { addDocument, pendingDocToUpload, setPendingDocToUpload } = useGame();
+  const { addDocument, pendingDocToUpload, setPendingDocToUpload, showToast } = useGame();
   
   // Local form attributes
   const [docName, setDocName] = useState('');
@@ -151,7 +151,14 @@ del comprobante seleccionado para verificar los cálculos.
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!docName.trim()) return;
+    if (!docName.trim()) {
+      showToast('Por favor ingresa un nombre para el documento.', 'error');
+      return;
+    }
+    if (!selectedFileObj) {
+      showToast('⚠️ Debes subir un documento antes de guardar.', 'error');
+      return;
+    }
 
     setLoading(true);
     
@@ -375,10 +382,10 @@ del comprobante seleccionado para verificar los cálculos.
           </label>
         </div>
 
-        {/* Save button with 800ms loading simulator */}
+        {/* Save button with loading simulator */}
         <button
           type="submit"
-          disabled={loading || !docName.trim()}
+          disabled={loading || !docName.trim() || !selectedFileObj}
           className="w-full py-3.5 bg-indigo-brand hover:bg-indigo-brand-hover disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm rounded-xl shadow-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
         >
           {loading ? (
@@ -389,7 +396,7 @@ del comprobante seleccionado para verificar los cálculos.
           ) : (
             <>
               <Database className="w-4 h-4" />
-              <span>Guardar en Base de Datos MOCK</span>
+              <span>Guardar en Base de Datos</span>
             </>
           )}
         </button>

@@ -28,7 +28,7 @@ export const ProfileView: React.FC = () => {
     level,
     levelProgress,
     unlockedRewards,
-    resetGame
+    signOut
   } = useGame();
 
   // Edit states
@@ -321,19 +321,20 @@ export const ProfileView: React.FC = () => {
       </div>
 
       {/* Multi-user playground reset for starting completely from zero */}
+      {/* Sign Out Action */}
       <div className="bg-red-50/20 border-2 border-dashed border-red-100 rounded-3xl p-5 text-center">
         <h4 className="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">
-          Demo: Probar como Usuario Nuevo
+          Sesión de Usuario
         </h4>
         <p className="text-[11px] font-semibold text-slate-500 leading-relaxed mb-4 max-w-[280px] mx-auto">
-          ¿Quieres probar la experiencia completa desde cero? Restablece todos los progresos de XP, nivel y documentos en un clic.
+          ¿Has terminado de validar documentos? Puedes cerrar tu sesión de forma segura.
         </p>
         <button
-          onClick={resetGame}
+          onClick={signOut}
           className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl shadow hover:shadow-lift transition-all flex items-center gap-1.5 mx-auto cursor-pointer"
         >
           <RefreshCw className="w-3.5 h-3.5" />
-          <span>Restablecer Todo a Cero (0 XP)</span>
+          <span>Cerrar Sesión</span>
         </button>
       </div>
     </div>

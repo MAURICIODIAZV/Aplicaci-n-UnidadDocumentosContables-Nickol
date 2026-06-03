@@ -201,9 +201,9 @@ export const LibraryView: React.FC = () => {
               <button
                 key={opt.key}
                 onClick={() => setSelectedDate(opt.key)}
-                className={`relative flex flex-col items-center justify-between py-2.5 px-0.5 min-h-[56px] rounded-xl transition-all duration-300 focus:outline-none cursor-pointer ${
+                className={`relative flex flex-col items-center justify-between py-2.5 px-0.5 min-h-[56px] rounded-xl transition-colors duration-300 focus:outline-none cursor-pointer ${
                   isSelected
-                    ? 'bg-indigo-brand text-white font-bold scale-105 shadow-md'
+                    ? 'bg-indigo-brand text-white shadow-md'
                     : 'bg-slate-50 hover:bg-slate-100 text-gray-500 hover:text-gray-800'
                 }`}
               >
