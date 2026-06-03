@@ -59,18 +59,16 @@ export const LibraryView: React.FC = () => {
       return (
         <div
           key={doc.id}
-          className={`bg-white rounded-3xl p-5 border shadow-ambient transition-all duration-300 relative ${
-            isCompleted 
-              ? 'border-emerald-100 hover:shadow-md' 
-              : 'border-slate-100 ring-offset-2 ring-indigo-50 hover:ring-2 hover:shadow-lift'
-          }`}
+          className={`bg-white rounded-3xl p-5 border shadow-ambient transition-all duration-300 relative ${isCompleted
+            ? 'border-emerald-100 hover:shadow-md'
+            : 'border-slate-100 ring-offset-2 ring-indigo-50 hover:ring-2 hover:shadow-lift'
+            }`}
         >
           {/* Card Heading with Name & Type */}
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3 pr-2 min-w-0">
-              <div className={`p-3 rounded-2xl shrink-0 ${
-                isExcelType ? 'bg-emerald-50 text-emerald-600' : 'bg-indigo-50 text-indigo-600'
-              }`}>
+              <div className={`p-3 rounded-2xl shrink-0 ${isExcelType ? 'bg-emerald-50 text-emerald-600' : 'bg-indigo-50 text-indigo-600'
+                }`}>
                 {isExcelType ? (
                   <FileSpreadsheet className="w-6 h-6" />
                 ) : (
@@ -86,7 +84,7 @@ export const LibraryView: React.FC = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="shrink-0">
               {isCompleted ? (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-lg text-[10px] font-bold border border-green-100">
@@ -191,7 +189,7 @@ export const LibraryView: React.FC = () => {
         <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-3 text-center">
           Timeline de Validación
         </label>
-        
+
         <div className="grid grid-cols-4 xs:grid-cols-7 gap-2 overflow-x-auto pb-1">
           {dateOptionsList.map((opt) => {
             const isSelected = currentSelectedDate === opt.key;
@@ -201,11 +199,10 @@ export const LibraryView: React.FC = () => {
               <button
                 key={opt.key}
                 onClick={() => setSelectedDate(opt.key)}
-                className={`relative flex flex-col items-center justify-between py-2.5 px-0.5 min-h-[56px] rounded-xl transition-colors duration-300 focus:outline-none cursor-pointer ${
-                  isSelected
-                    ? 'bg-indigo-brand text-white shadow-md'
-                    : 'bg-slate-50 hover:bg-slate-100 text-gray-500 hover:text-gray-800'
-                }`}
+                className={`relative flex flex-col items-center justify-between py-2.5 px-0.5 min-h-[56px] rounded-xl transition-colors duration-300 focus:outline-none cursor-pointer ${isSelected
+                  ? 'bg-indigo-brand text-white shadow-md'
+                  : 'bg-slate-50 hover:bg-slate-100 text-gray-500 hover:text-gray-800'
+                  }`}
               >
                 {/* Micro badge indicator on date buttons */}
                 {indicatorType === 'pending' && (
@@ -238,7 +235,7 @@ export const LibraryView: React.FC = () => {
           </h3>
           <p className="text-xs text-gray-400 mt-0.5">Mostrando {filteredDocs.length} elemento(s)</p>
         </div>
-        
+
         {isEarlyBirdActive && (
           <div className="bg-amber-50 text-amber-750 text-[10px] font-bold rounded-lg py-1 px-2.5 border border-amber-200.5 flex items-center gap-1 shrink-0">
             <Sparkles className="w-3 h-3 text-amber-500 animate-pulse" />
